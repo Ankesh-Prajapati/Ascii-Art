@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dither / ASCII Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <input type="file" id="fileInput" accept="image/*" hidden>
+    <input type="file" id="svgInput" accept=".svg" hidden>
+
+    <div id="dropHint" class="drop-hint">Drop an image anywhere</div>
+    <div id="loader" class="loader hidden">Rendering…</div>
+
+    <main class="stage">
+        <canvas id="canvas"></canvas>
+    </main>
+
+    <button id="panelToggle" class="panel-toggle" aria-label="Toggle controls">☰</button>
+
+    <aside class="panel" id="panel">
+        <div class="panel-header">
+            <span class="panel-title">Dither / ASCII Studio</span>
+        </div>
+
+        <div class="panel-actions">
+            <button class="btn" id="uploadBtn">Upload Image</button>
+            <button class="btn btn-primary" id="saveBtn">Save PNG</button>
+        </div>
+
+        <div class="panel-scroll">
+            <section class="panel-section">
+                <h3>Shape</h3>
+
+                <div class="shape-grid" id="shapeGrid"></div>
+
+                <button class="btn btn-ghost" id="moreShapesBtn">More Shapes</button>
+                <button class="btn btn-ghost" id="loadSvgBtn">Load Custom SVG…</button>
+            </section>
+
+            <section class="panel-section">
+                <h3>Grid &amp; Color</h3>
+
+                <div class="control">
+                    <div class="control-label"><span>Cell Size</span><span class="control-value" id="val-cellSize">10</span></div>
+                    <input type="range" id="cellSize" min="4" max="40" step="1" value="10">
+                </div>
+
+                <div class="control">
+                    <div class="control-label"><span>Gap</span><span class="control-value" id="val-gap">1.00</span></div>
+                    <input type="range" id="gap" min="0" max="20" step="0.25" value="1">
+                </div>
+
+                <div class="control">
+                    <div class="control-label"><span>Contrast</span><span class="control-value" id="val-contrast">0</span></div>
+                    <input type="range" id="contrast" min="-100" max="100" step="1" value="0">
+                </div>
+
+                <div class="control control-row">
+                    <label class="color-field">
+                        <span>Background</span>
+                        <input type="color" id="bgColor" value="#111111">
+                    </label>
+                    <label class="color-field" id="monoColorField">
+                        <span>Foreground</span>
+                        <input type="color" id="monoColor" value="#ffffff">
+                    </label>
+                </div>
+
+                <label class="switch-field">
+                    <span>Use Original Color</span>
+                    <span class="switch">
+                        <input type="checkbox" id="useColor" checked>
+                        <span class="switch-track"></span>
+                    </span>
+                </label>
+            </section>
+
+            <section class="panel-section">
+                <h3>Effect</h3>
+
+                <div class="control">
+                    <div class="control-label"><span>Mode</span></div>
+                    <select id="mode">
+                        <option value="flat">Static (Flat)</option>
+                        <option value="stretch_v">Stretch Vertical</option>
+                        <option value="stretch_h">Stretch Horizontal</option>
+                        <option value="checker">Checkerboard (Alt)</option>
+                        <option value="glitch">Glitch (Luma&gt;Offset)</option>
+                        <option value="melt">Pixel Melt (Drip)</option>
+                        <option value="crosshatch">Crosshatch</option>
+                        <option value="rotation">Rotation (Luma&gt;Angle)</option>
+                        <option value="halftone" selected>Halftone (Luma&gt;Size)</option>
+                        <option value="inv_halftone">Inverse (Dark&gt;Size)</option>
+                        <option value="random_size">Random Size (Chaos)</option>
+                        <option value="random_rot">Random Rotation</option>
+                        <option value="opacity">Opacity (Luma&gt;Alpha)</option>
+                        <option value="inv_opacity">Inv. Opacity (Dark&gt;Alpha)</option>
+                        <option value="threshold">Threshold (Hard Cut)</option>
+                        <option value="flow">Flow Field (Direction)</option>
+                        <option value="edges">Edge Detect (Outline)</option>
+                        <option value="jitter">Mosaic Jitter (Scatter)</option>
+                        <option value="posterize">Posterize (Levels)</option>
+                        <option value="interference">Interference (Moiré)</option>
+                        <option value="crt_scan">CRT TV (Scanline)</option>
+                        <option value="bio">Bio-Organic (Cellular)</option>
+                        <option value="eraser">Eraser (Noise)</option>
+                    </select>
+                </div>
+
+                <div class="control">
+                    <div class="control-label"><span>Scale Factor</span><span class="control-value" id="val-baseScale">0.900</span></div>
+                    <input type="range" id="baseScale" min="0.1" max="3" step="0.025" value="0.9">
+                </div>
+
+                <div class="control">
+                    <div class="control-label"><span>Effect Power</span><span class="control-value" id="val-intensity">1.00</span></div>
+                    <input type="range" id="intensity" min="0" max="5" step="0.05" value="1">
+                </div>
+            </section>
+
+        </div>
+
+        <div class="panel-footer">
+            <button class="btn btn-ghost" id="resetBtn">Reset Settings</button>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>
